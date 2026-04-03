@@ -256,7 +256,7 @@
             <span>Petrol Engine</span>
         </div>
         <div class="legend-item">
-            <div class="legend-shape"><div class="legend-hex" style="background: #8b7355;"></div></div>
+            <div class="legend-shape"><div class="legend-hex" style="background: #5a9c6d;"></div></div>
             <span>Hybrid Engine</span>
         </div>
         <div class="legend-item">
@@ -442,7 +442,7 @@
         const fuelColors = {
             diesel: "#c75b39",
             petrol: "#d4a84b",
-            hybrid: "#8b7355"
+            hybrid: "#5a9c6d"
         };
 
         let currentTheme = 'light';
@@ -642,11 +642,13 @@
         network.on("click", function (params) {
             if (params.nodes.length === 0) {
                 infoPanel.classList.remove("visible");
+                resetEdgeStyles();
                 return;
             }
 
             const nodeId = params.nodes[0];
             const node = data.nodes.get(nodeId);
+            const colors = getColors();
 
             if (node.group === "engine") {
                 const e = node.data;
@@ -662,6 +664,16 @@
                     <div class="detail"><span class="detail-label">Years</span><span class="detail-value">${e.yearRange}</span></div>
                     ${e.notes ? `<div class="detail"><span class="detail-label">Notes</span><span class="detail-value">${e.notes}</span></div>` : ""}
                 `;
+
+                data.edges.forEach(function(edge) {
+                    if (edge.to === nodeId || edge.from === nodeId) {
+                        data.edges.update({
+                            id: edge.id,
+                            color: { color: colors.text, highlight: colors.text },
+                            width: 3
+                        });
+                    }
+                });
             } else {
                 const c = node.data;
                 const engineNames = c.engines.map(id => {
@@ -675,10 +687,23 @@
                     <div class="detail"><span class="detail-label">Brand</span><span class="detail-value">${c.brand}</span></div>
                     <div class="detail"><span class="detail-label">Engines</span><span class="detail-value" style="font-size:11px">${engineNames}</span></div>
                 `;
+
+                resetEdgeStyles();
             }
 
             infoPanel.classList.add("visible");
         });
+
+        function resetEdgeStyles() {
+            const colors = getColors();
+            data.edges.forEach(function(edge) {
+                data.edges.update({
+                    id: edge.id,
+                    color: { color: colors.edge, highlight: colors.edge },
+                    width: 2
+                });
+            });
+        }
     </script>
 </body>
 </html>
