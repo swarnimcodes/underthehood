@@ -60,10 +60,6 @@
             cursor: grabbing;
         }
 
-        .vis-network .vis-node {
-            cursor: pointer !important;
-        }
-
         .theme-toggle {
             position: fixed;
             top: 24px;
@@ -84,6 +80,14 @@
         .theme-toggle:hover {
             background: var(--text-muted);
             color: var(--bg);
+        }
+
+        .vis-network canvas {
+            cursor: grab;
+        }
+
+        .vis-network canvas:active {
+            cursor: grabbing;
         }
 
         .info-panel {
@@ -571,7 +575,13 @@
             }
         };
 
-        const network = new vis.Network(container, data, options);
+        network.on("hoverNode", function () {
+            container.style.cursor = 'pointer';
+        });
+
+        network.on("blurNode", function () {
+            container.style.cursor = 'grab';
+        });
 
         function initTheme() {
             const saved = localStorage.getItem('theme');
