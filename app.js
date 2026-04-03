@@ -238,6 +238,11 @@ function closeSearch() {
 }
 
 function selectResult(item) {
+    const container = document.querySelector('.search-container');
+    container.classList.add('ripple');
+    setTimeout(function() {
+        container.classList.remove('ripple');
+    }, 400);
     closeSearch();
     network.selectNodes([item.id]);
     network.focus(item.id, { scale: 1.5, animation: true });

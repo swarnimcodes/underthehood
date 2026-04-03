@@ -327,3 +327,22 @@ h1, h2, h3, h4, .info-panel h3, .legend h4, .theme-toggle {
     font-size: 11px;
     margin: 0 2px;
 }
+
+.search-container.ripple::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, var(--text-muted) 0%, transparent 70%);
+    animation: ripple 0.4s ease-out;
+}
+
+@keyframes ripple {
+    0% {
+        opacity: 0.4;
+        transform: scale(0);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.5);
+    }
+}
