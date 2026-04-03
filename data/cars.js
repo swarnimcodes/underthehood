@@ -195,13 +195,13 @@ const cars = [
         id: "skoda-octavia",
         name: "Skoda Octavia",
         brand: "Skoda",
-        engines: ["vw-20-tsi"]
+        engines: ["vw-20-tsi", "vw-ea288-20-tdi"]
     },
     {
         id: "audi-a3",
         name: "Audi A3",
         brand: "Audi",
-        engines: ["vw-20-tsi"]
+        engines: ["vw-20-tsi", "vw-ea288-20-tdi"]
     },
     {
         id: "mini-cooper",
@@ -351,13 +351,13 @@ const cars = [
         id: "skoda-superb",
         name: "Skoda Superb",
         brand: "Skoda",
-        engines: ["vw-ea888-gen3b"]
+        engines: ["vw-ea888-gen3b", "vw-ea288-20-tdi"]
     },
     {
         id: "skoda-kodiaq",
         name: "Skoda Kodiaq",
         brand: "Skoda",
-        engines: ["vw-ea888-gen3b"]
+        engines: ["vw-ea888-gen3b", "vw-ea288-20-tdi"]
     },
     {
         id: "skoda-kylaq",
@@ -369,19 +369,19 @@ const cars = [
         id: "audi-a4",
         name: "Audi A4",
         brand: "Audi",
-        engines: ["vw-ea888-gen3b"]
+        engines: ["vw-ea888-gen3b", "vw-ea288-20-tdi"]
     },
     {
         id: "audi-a6",
         name: "Audi A6",
         brand: "Audi",
-        engines: ["vw-20-tsi"]
+        engines: ["vw-20-tsi", "vw-ea288-20-tdi"]
     },
     {
         id: "audi-q3",
         name: "Audi Q3",
         brand: "Audi",
-        engines: ["vw-ea888-gen3b"]
+        engines: ["vw-ea888-gen3b", "vw-ea288-20-tdi"]
     },
     {
         id: "audi-q3-sportback",
@@ -393,7 +393,7 @@ const cars = [
         id: "audi-q5",
         name: "Audi Q5",
         brand: "Audi",
-        engines: ["vw-ea888-gen3b"]
+        engines: ["vw-ea888-gen3b", "vw-ea288-20-tdi"]
     },
     {
         id: "audi-q7",
@@ -424,5 +424,107 @@ const cars = [
         name: "Audi RS Q8",
         brand: "Audi",
         engines: ["audi-ea825"]
+    },
+    {
+        id: "honda-jazz",
+        name: "Honda Jazz",
+        brand: "Honda",
+        engines: ["honda-l15b"]
+    },
+    {
+        id: "honda-wrv",
+        name: "Honda WR-V",
+        brand: "Honda",
+        engines: ["honda-l15b"]
+    },
+    {
+        id: "honda-brv",
+        name: "Honda BR-V",
+        brand: "Honda",
+        engines: ["honda-l15b"]
+    },
+    {
+        id: "skoda-rapid",
+        name: "Skoda Rapid",
+        brand: "Skoda",
+        engines: ["vw-ea211-tsi", "vw-ea288-15-tdi"]
+    },
+    {
+        id: "vw-ameo",
+        name: "VW Ameo",
+        brand: "Volkswagen",
+        engines: ["vw-ea288-15-tdi"]
+    },
+    {
+        id: "vw-polo",
+        name: "VW Polo",
+        brand: "Volkswagen",
+        engines: ["vw-ea211-tsi", "vw-ea288-15-tdi"]
+    },
+    {
+        id: "vw-vento",
+        name: "VW Vento",
+        brand: "Volkswagen",
+        engines: ["vw-ea211-tsi", "vw-ea288-15-tdi"]
+    },
+    {
+        id: "vw-jetta",
+        name: "VW Jetta",
+        brand: "Volkswagen",
+        engines: ["vw-ea888-gen3b", "vw-ea288-20-tdi"]
+    },
+    {
+        id: "vw-passat",
+        name: "VW Passat",
+        brand: "Volkswagen",
+        engines: ["vw-ea888-gen3b", "vw-ea288-20-tdi"]
+    },
+    {
+        id: "suzuki-s-cross",
+        name: "Maruti Suzuki S-Cross",
+        brand: "Suzuki",
+        engines: ["suzuki-k15b"]
+    },
+    {
+        id: "suzuki-vitara-brezza",
+        name: "Maruti Suzuki Vitara Brezza",
+        brand: "Suzuki",
+        engines: ["suzuki-k15b"]
+    },
+    {
+        id: "tata-hexa",
+        name: "Tata Hexa",
+        brand: "Tata",
+        engines: ["fiat-multijet-II"]
+    },
+    {
+        id: "renault-captur",
+        name: "Renault Captur",
+        brand: "Renault",
+        engines: ["renault-tce100"]
+    },
+    {
+        id: "mercedes-a-class",
+        name: "Mercedes A-Class",
+        brand: "Mercedes-Benz",
+        engines: ["mercedes-m282"]
+    },
+    {
+        id: "honda-crv",
+        name: "Honda CR-V",
+        brand: "Honda",
+        engines: ["honda-r20a", "honda-n16a2"]
+    },
+    {
+        id: "honda-accord",
+        name: "Honda Accord",
+        brand: "Honda",
+        engines: ["honda-lfb-hybrid"]
+    },
+    {
+        id: "toyota-yaris",
+        name: "Toyota Yaris",
+        brand: "Toyota",
+        engines: ["toyota-2nr-fe"]
     }
 ];
