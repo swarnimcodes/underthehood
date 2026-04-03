@@ -82,7 +82,7 @@ const data = { nodes: new vis.DataSet(graphData.nodes), edges: new vis.DataSet(g
 const options = {
     nodes: {
         borderWidth: 3,
-        shadow: { enabled: true, color: "rgba(160, 128, 96, 0.3)", size: 10, x: 0, y: 4 }
+        shadow: { enabled: true, color: "rgba(100, 80, 60, 0.4)", size: 15, x: 0, y: 6 }
     },
     edges: {
         arrows: { to: { enabled: true, scaleFactor: 0.6 } }
