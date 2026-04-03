@@ -160,5 +160,77 @@ const cars = [
         name: "Honda Civic",
         brand: "Honda",
         engines: ["honda-l15c7"]
+    },
+    {
+        id: "renault-kiger",
+        name: "Renault Kiger",
+        brand: "Renault",
+        engines: ["renault-tce100"]
+    },
+    {
+        id: "renault-duster",
+        name: "Renault Duster",
+        brand: "Renault",
+        engines: ["renault-tce100", "renault-tce130"]
+    },
+    {
+        id: "renault-captur",
+        name: "Renault Captur",
+        brand: "Renault",
+        engines: ["renault-tce100", "renault-tce130"]
+    },
+    {
+        id: "bmw-3series",
+        name: "BMW 3 Series",
+        brand: "BMW",
+        engines: ["bmw-b48"]
+    },
+    {
+        id: "bmw-x1",
+        name: "BMW X1",
+        brand: "BMW",
+        engines: ["bmw-b48"]
+    },
+    {
+        id: "vw-golf-gti",
+        name: "VW Golf GTI",
+        brand: "Volkswagen",
+        engines: ["vw-20-tsi"]
+    },
+    {
+        id: "skoda-octavia",
+        name: "Skoda Octavia",
+        brand: "Skoda",
+        engines: ["vw-20-tsi"]
+    },
+    {
+        id: "audi-a3",
+        name: "Audi A3",
+        brand: "Audi",
+        engines: ["vw-20-tsi"]
+    },
+    {
+        id: "mini-cooper",
+        name: "MINI Cooper",
+        brand: "MINI",
+        engines: ["mini-b38"]
+    },
+    {
+        id: "mini-countryman",
+        name: "MINI Countryman",
+        brand: "MINI",
+        engines: ["mini-b38", "bmw-b48"]
+    },
+    {
+        id: "mercedes-a-class",
+        name: "Mercedes A-Class",
+        brand: "Mercedes-Benz",
+        engines: ["mercedes-m282"]
+    },
+    {
+        id: "mercedes-gla",
+        name: "Mercedes GLA",
+        brand: "Mercedes-Benz",
+        engines: ["mercedes-m282"]
     }
 ];
