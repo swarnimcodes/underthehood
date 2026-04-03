@@ -51,6 +51,31 @@ h1, h2, h3, h4, .info-panel h3, .legend h4, .theme-toggle {
     cursor: grab;
 }
 
+#network.ripple::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 0;
+    background: radial-gradient(circle at var(--ripple-x, 50%) var(--ripple-y, 50%), var(--text-muted) 0%, transparent 50%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+#network.ripple::after {
+    animation: canvasRipple 0.6s ease-out;
+}
+
+@keyframes canvasRipple {
+    0% {
+        opacity: 0.3;
+        transform: scale(0);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(3);
+    }
+}
+
 #network:active {
     cursor: grabbing;
 }
@@ -332,17 +357,23 @@ h1, h2, h3, h4, .info-panel h3, .legend h4, .theme-toggle {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle, var(--text-muted) 0%, transparent 70%);
-    animation: ripple 0.4s ease-out;
+    border-radius: 12px;
+    background: radial-gradient(circle at center, var(--text-muted) 0%, transparent 70%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.search-container.ripple::after {
+    animation: ripple 0.5s ease-out;
 }
 
 @keyframes ripple {
     0% {
-        opacity: 0.4;
+        opacity: 0.6;
         transform: scale(0);
     }
     100% {
         opacity: 0;
-        transform: scale(1.5);
+        transform: scale(2);
     }
 }

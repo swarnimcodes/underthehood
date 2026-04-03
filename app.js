@@ -240,10 +240,6 @@ function closeSearch() {
 function selectResult(item) {
     const container = document.querySelector('.search-container');
     container.classList.add('ripple');
-    setTimeout(function() {
-        container.classList.remove('ripple');
-    }, 400);
-    closeSearch();
     network.selectNodes([item.id]);
     network.focus(item.id, { scale: 1.5, animation: true });
     const node = data.nodes.get(item.id);
@@ -326,6 +322,17 @@ network.on("click", function (params) {
     const nodeId = params.nodes[0];
     const node = data.nodes.get(nodeId);
     const colors = getColors();
+
+    if (params.pointer) {
+        const x = (params.pointer.x / window.innerWidth) * 100;
+        const y = (params.pointer.y / window.innerHeight) * 100;
+        container.style.setProperty('--ripple-x', x + '%');
+        container.style.setProperty('--ripple-y', y + '%');
+        container.classList.add('ripple');
+        setTimeout(function() {
+            container.classList.remove('ripple');
+        }, 600);
+    }
 
     if (node.group === "engine") {
         const e = node.data;
