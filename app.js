@@ -241,6 +241,19 @@ function selectResult(item) {
     closeSearch();
     network.selectNodes([item.id]);
     network.focus(item.id, { scale: 1.5, animation: true });
+    const colors = getColors();
+    data.nodes.update({
+        id: item.id,
+        borderWidth: 5,
+        shadow: { enabled: true, color: currentTheme === 'dark' ? 'rgba(255,255,255,0.5)' : 'rgba(160,128,96,0.8)', size: 25, x: 0, y: 0 }
+    });
+    setTimeout(function() {
+        data.nodes.update({
+            id: item.id,
+            borderWidth: 3,
+            shadow: { enabled: true, color: colors.shadow, size: 12, x: 0, y: 4 }
+        });
+    }, 400);
     const node = data.nodes.get(item.id);
     if (node.group === 'engine') {
         const e = node.data;
@@ -321,6 +334,19 @@ network.on("click", function (params) {
     const nodeId = params.nodes[0];
     const node = data.nodes.get(nodeId);
     const colors = getColors();
+
+    data.nodes.update({
+        id: nodeId,
+        borderWidth: 5,
+        shadow: { enabled: true, color: currentTheme === 'dark' ? 'rgba(255,255,255,0.5)' : 'rgba(160,128,96,0.8)', size: 25, x: 0, y: 0 }
+    });
+    setTimeout(function() {
+        data.nodes.update({
+            id: nodeId,
+            borderWidth: 3,
+            shadow: { enabled: true, color: colors.shadow, size: 12, x: 0, y: 4 }
+        });
+    }, 400);
 
     if (node.group === "engine") {
         const e = node.data;
