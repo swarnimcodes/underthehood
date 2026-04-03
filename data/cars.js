@@ -93,7 +93,7 @@ const cars = [
         id: "toyota-corolla",
         name: "Toyota Corolla",
         brand: "Toyota",
-        engines: ["toyota-m20a-fxs", "toyota-a25a-fxs"]
+        engines: ["toyota-m20a-fxs"]
     },
     {
         id: "toyota-camry",
@@ -171,13 +171,7 @@ const cars = [
         id: "renault-duster",
         name: "Renault Duster",
         brand: "Renault",
-        engines: ["renault-tce100", "renault-tce130"]
-    },
-    {
-        id: "renault-captur",
-        name: "Renault Captur",
-        brand: "Renault",
-        engines: ["renault-tce100", "renault-tce130"]
+        engines: ["renault-tce130"]
     },
     {
         id: "bmw-3series",
@@ -220,12 +214,6 @@ const cars = [
         name: "MINI Countryman",
         brand: "MINI",
         engines: ["mini-b38", "bmw-b48"]
-    },
-    {
-        id: "mercedes-a-class",
-        name: "Mercedes A-Class",
-        brand: "Mercedes-Benz",
-        engines: ["mercedes-m282"]
     },
     {
         id: "mercedes-gla",
