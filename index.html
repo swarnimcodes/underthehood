@@ -7,6 +7,32 @@
     <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg: #f5f2eb;
+            --text: #2d2d2d;
+            --text-muted: #8b7355;
+            --panel-bg: rgba(245, 242, 235, 0.95);
+            --panel-border: rgba(160, 128, 96, 0.2);
+            --legend-bg: rgba(245, 242, 235, 0.9);
+            --shadow: rgba(160, 128, 96, 0.15);
+            --edge: rgba(160, 128, 96, 0.5);
+            --car-bg: #4a4a4a;
+            --font-bg: rgba(245, 242, 235, 0.8);
+        }
+
+        [data-theme="dark"] {
+            --bg: #0d0d0d;
+            --text: #e8e8e8;
+            --text-muted: #a08060;
+            --panel-bg: rgba(20, 20, 25, 0.95);
+            --panel-border: rgba(160, 128, 96, 0.15);
+            --legend-bg: rgba(20, 20, 25, 0.9);
+            --shadow: rgba(0, 0, 0, 0.4);
+            --edge: rgba(180, 150, 110, 0.5);
+            --car-bg: #b0b0b0;
+            --font-bg: rgba(13, 13, 13, 0.85);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -15,30 +41,54 @@
 
         body {
             font-family: 'DM Sans', sans-serif;
-            background: #f5f2eb;
-            color: #2d2d2d;
+            background: var(--bg);
+            color: var(--text);
             overflow: hidden;
             height: 100vh;
+            transition: background 0.3s, color 0.3s;
         }
 
         #network {
             width: 100%;
             height: 100vh;
-            background: #f5f2eb;
+            background: var(--bg);
+            transition: background 0.3s;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 20px;
+            padding: 6px 16px;
+            font-size: 12px;
+            cursor: pointer;
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            z-index: 200;
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            background: var(--text-muted);
+            color: var(--bg);
         }
 
         .info-panel {
             position: fixed;
             bottom: 24px;
             left: 24px;
-            background: rgba(245, 242, 235, 0.95);
+            background: var(--panel-bg);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(160, 128, 96, 0.2);
+            border: 1px solid var(--panel-border);
             border-radius: 12px;
             padding: 20px 24px;
             min-width: 280px;
             max-width: 340px;
-            box-shadow: 0 8px 32px rgba(160, 128, 96, 0.15);
+            box-shadow: 0 8px 32px var(--shadow);
             transform: translateY(120%);
             opacity: 0;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -54,7 +104,7 @@
             font-size: 15px;
             font-weight: 600;
             margin-bottom: 12px;
-            color: #2d2d2d;
+            color: var(--text);
             letter-spacing: 0.3px;
         }
 
@@ -76,16 +126,16 @@
         }
 
         .info-panel .type-badge.car {
-            background: rgba(74, 74, 74, 0.15);
-            color: #4a4a4a;
-            border: 1px solid rgba(74, 74, 74, 0.3);
+            background: rgba(176, 176, 176, 0.15);
+            color: #b0b0b0;
+            border: 1px solid rgba(176, 176, 176, 0.3);
         }
 
         .info-panel .detail {
             display: flex;
             justify-content: space-between;
             padding: 6px 0;
-            border-bottom: 1px solid rgba(160, 128, 96, 0.1);
+            border-bottom: 1px solid var(--panel-border);
             font-size: 13px;
         }
 
@@ -94,11 +144,11 @@
         }
 
         .info-panel .detail-label {
-            color: #8b7355;
+            color: var(--text-muted);
         }
 
         .info-panel .detail-value {
-            color: #2d2d2d;
+            color: var(--text);
             font-weight: 500;
         }
 
@@ -106,9 +156,9 @@
             position: fixed;
             top: 24px;
             right: 24px;
-            background: rgba(245, 242, 235, 0.9);
+            background: var(--legend-bg);
             backdrop-filter: blur(8px);
-            border: 1px solid rgba(160, 128, 96, 0.15);
+            border: 1px solid var(--panel-border);
             border-radius: 10px;
             padding: 16px 20px;
             font-size: 12px;
@@ -118,7 +168,7 @@
             font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #8b7355;
+            color: var(--text-muted);
             margin-bottom: 10px;
         }
 
@@ -151,18 +201,18 @@
         .legend-circle {
             width: 12px;
             height: 12px;
-            background: #4a4a4a;
-            border: 2px dashed #8b7355;
+            background: var(--car-bg);
+            border: 2px dashed var(--text-muted);
             border-radius: 50%;
             box-sizing: border-box;
         }
 
         .instructions {
             position: fixed;
-            top: 24px;
-            left: 24px;
+            bottom: 24px;
+            right: 24px;
             font-size: 12px;
-            color: #8b7355;
+            color: var(--text-muted);
         }
 
         .instructions span {
@@ -173,6 +223,8 @@
 </head>
 <body>
     <div id="network"></div>
+
+    <button type="button" class="theme-toggle" onclick="toggleTheme()">Switch to Dark</button>
 
     <div class="instructions">
         <span>Drag to move</span>
@@ -380,85 +432,110 @@
             hybrid: "#8b7355"
         };
 
-        const nodes = [];
-        const edges = [];
+        let currentTheme = 'light';
+        
+        function getColors() {
+            if (currentTheme === 'dark') {
+                return {
+                    text: '#e8e8e8',
+                    fontBg: 'rgba(13, 13, 13, 0.85)',
+                    car: '#b0b0b0',
+                    edge: 'rgba(180, 150, 110, 0.5)'
+                };
+            }
+            return {
+                text: '#2d2d2d',
+                fontBg: 'rgba(245, 242, 235, 0.8)',
+                car: '#4a4a4a',
+                edge: 'rgba(160, 128, 96, 0.5)'
+            };
+        }
 
-        const nodePositions = {
-            "fiat-multijet-II": { x: -200, y: 0 },
-            "suzuki-k15C": { x: 120, y: -100 },
-            "toyota-m15D-FXE": { x: 240, y: -100 },
-            "hyundai-g4fl": { x: 0, y: 100 },
-            "hyundai-g4lh": { x: 140, y: 100 },
-            "hyundai-d4fb": { x: 280, y: 100 },
-            "honda-l15b": { x: 380, y: 0 },
-            "honda-l15b-hev": { x: 500, y: 0 }
-        };
+        function buildGraph() {
+            const colors = getColors();
+            const nodes = [];
+            const edges = [];
 
-        engines.forEach(engine => {
-            nodes.push({
-                id: engine.id,
-                label: engine.name,
-                group: "engine",
-                shape: "hexagon",
-                size: 26,
-                x: nodePositions[engine.id]?.x,
-                y: nodePositions[engine.id]?.y,
-                color: {
-                    background: fuelColors[engine.fuel],
-                    border: fuelColors[engine.fuel],
-                    highlight: { background: fuelColors[engine.fuel], border: "#2d2d2d" }
-                },
-                font: { color: "#2d2d2d", background: "rgba(245, 242, 235, 0.8)" },
-                data: engine
-            });
-        });
+            const nodePositions = {
+                "fiat-multijet-II": { x: -200, y: 0 },
+                "suzuki-k15C": { x: 120, y: -100 },
+                "toyota-m15D-FXE": { x: 240, y: -100 },
+                "hyundai-g4fl": { x: 0, y: 100 },
+                "hyundai-g4lh": { x: 140, y: 100 },
+                "hyundai-d4fb": { x: 280, y: 100 },
+                "honda-l15b": { x: 380, y: 0 },
+                "honda-l15b-hev": { x: 500, y: 0 }
+            };
 
-        const carPositions = [
-            { x: -400, y: -80 },
-            { x: -400, y: -30 },
-            { x: -400, y: 20 },
-            { x: -400, y: 70 },
-            { x: -400, y: 120 },
-            { x: -40, y: -180 },
-            { x: 40, y: -180 },
-            { x: -40, y: 180 },
-            { x: 40, y: 180 },
-            { x: 160, y: 180 },
-            { x: 280, y: -50 },
-            { x: 400, y: 50 }
-        ];
-
-        cars.forEach((car, i) => {
-            nodes.push({
-                id: car.id,
-                label: car.name,
-                group: "car",
-                shape: "dot",
-                size: 20,
-                x: carPositions[i].x,
-                y: carPositions[i].y,
-                color: {
-                    background: "#4a4a4a",
-                    border: "#4a4a4a",
-                    highlight: { background: "#2d2d2d", border: "#2d2d2d" }
-                },
-                font: { color: "#2d2d2d", background: "rgba(245, 242, 235, 0.8)" },
-                data: car
-            });
-
-            car.engines.forEach(engineId => {
-                edges.push({
-                    from: car.id,
-                    to: engineId,
-                    color: { color: "rgba(160, 128, 96, 0.5)", highlight: "rgba(160, 128, 96, 0.8)" },
-                    width: 2,
-                    smooth: { type: "continuous" }
+            engines.forEach(engine => {
+                nodes.push({
+                    id: engine.id,
+                    label: engine.name,
+                    group: "engine",
+                    shape: "hexagon",
+                    size: 26,
+                    x: nodePositions[engine.id]?.x,
+                    y: nodePositions[engine.id]?.y,
+                    color: {
+                        background: fuelColors[engine.fuel],
+                        border: fuelColors[engine.fuel],
+                        highlight: { background: fuelColors[engine.fuel], border: colors.text }
+                    },
+                    font: { color: colors.text, background: colors.fontBg },
+                    data: engine
                 });
             });
-        });
 
+            const carPositions = [
+                { x: -400, y: -80 },
+                { x: -400, y: -30 },
+                { x: -400, y: 20 },
+                { x: -400, y: 70 },
+                { x: -400, y: 120 },
+                { x: -40, y: -180 },
+                { x: 40, y: -180 },
+                { x: -40, y: 180 },
+                { x: 40, y: 180 },
+                { x: 160, y: 180 },
+                { x: 280, y: -50 },
+                { x: 400, y: 50 }
+            ];
+
+            cars.forEach((car, i) => {
+                nodes.push({
+                    id: car.id,
+                    label: car.name,
+                    group: "car",
+                    shape: "dot",
+                    size: 20,
+                    x: carPositions[i].x,
+                    y: carPositions[i].y,
+                    color: {
+                        background: colors.car,
+                        border: colors.car,
+                        highlight: { background: "#fff", border: "#fff" }
+                    },
+                    font: { color: colors.text, background: colors.fontBg },
+                    data: car
+                });
+
+                car.engines.forEach(engineId => {
+                    edges.push({
+                        from: car.id,
+                        to: engineId,
+                        color: { color: colors.edge, highlight: colors.edge },
+                        width: 2,
+                        smooth: { type: "continuous" }
+                    });
+                });
+            });
+
+            return { nodes, edges };
+        }
+
+        const graphData = buildGraph();
         const container = document.getElementById("network");
-        const data = { nodes: new vis.DataSet(nodes), edges: new vis.DataSet(edges) };
+        const data = { nodes: new vis.DataSet(graphData.nodes), edges: new vis.DataSet(graphData.edges) };
 
         const options = {
             nodes: {
@@ -486,6 +563,35 @@
         };
 
         const network = new vis.Network(container, data, options);
+
+        function toggleTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            
+            const btn = document.querySelector('.theme-toggle');
+            btn.textContent = currentTheme === 'light' ? 'Switch to Dark' : 'Switch to Light';
+
+            const colors = getColors();
+            data.nodes.forEach(function(node) {
+                const isCar = node.group === 'car';
+                data.nodes.update({
+                    id: node.id,
+                    color: {
+                        background: isCar ? colors.car : node.color.background,
+                        border: isCar ? colors.car : node.color.border,
+                        highlight: { background: isCar ? '#fff' : node.color.background, border: colors.text }
+                    },
+                    font: { color: colors.text, background: colors.fontBg }
+                });
+            });
+            
+            data.edges.forEach(function(edge) {
+                data.edges.update({
+                    id: edge.id,
+                    color: { color: colors.edge, highlight: colors.edge }
+                });
+            });
+        }
 
         const infoPanel = document.getElementById("infoPanel");
         const infoType = document.getElementById("infoType");
