@@ -13,7 +13,7 @@ function getColors() {
             fontBg: 'rgba(13, 13, 13, 0.85)',
             car: '#b0b0b0',
             edge: 'rgba(180, 150, 110, 0.5)',
-            shadow: 'rgba(0, 0, 0, 0.8)'
+            shadow: 'rgba(255, 255, 255, 0.15)'
         };
     }
     return {
