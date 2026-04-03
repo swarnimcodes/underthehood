@@ -12,14 +12,16 @@ function getColors() {
             text: '#e8e8e8',
             fontBg: 'rgba(13, 13, 13, 0.85)',
             car: '#b0b0b0',
-            edge: 'rgba(180, 150, 110, 0.5)'
+            edge: 'rgba(180, 150, 110, 0.5)',
+            shadow: 'rgba(0, 0, 0, 0.5)'
         };
     }
     return {
         text: '#2d2d2d',
         fontBg: 'rgba(245, 242, 235, 0.8)',
         car: '#4a4a4a',
-        edge: 'rgba(160, 128, 96, 0.5)'
+        edge: 'rgba(160, 128, 96, 0.5)',
+        shadow: 'rgba(100, 80, 60, 0.4)'
     };
 }
 
@@ -81,8 +83,7 @@ const data = { nodes: new vis.DataSet(graphData.nodes), edges: new vis.DataSet(g
 
 const options = {
     nodes: {
-        borderWidth: 3,
-        shadow: { enabled: true, color: "rgba(100, 80, 60, 0.4)", size: 15, x: 0, y: 6 }
+        borderWidth: 3
     },
     edges: {
         arrows: { to: { enabled: true, scaleFactor: 0.6 } }
@@ -144,7 +145,8 @@ function applyTheme(save) {
                 border: isCar ? colors.car : node.color.border,
                 highlight: { background: isCar ? '#fff' : node.color.background, border: colors.text }
             },
-            font: { color: colors.text, background: colors.fontBg }
+            font: { color: colors.text, background: colors.fontBg },
+            shadow: { enabled: true, color: colors.shadow, size: 15, x: 0, y: 6 }
         });
     });
     
