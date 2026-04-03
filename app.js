@@ -13,7 +13,7 @@ function getColors() {
             fontBg: 'rgba(13, 13, 13, 0.85)',
             car: '#b0b0b0',
             edge: 'rgba(180, 150, 110, 0.5)',
-            shadow: 'rgba(255, 255, 255, 0.4)'
+            shadow: 'rgba(255, 255, 255, 0.2)'
         };
     }
     return {
@@ -43,7 +43,7 @@ function buildGraph() {
                 highlight: { background: fuelColors[engine.fuel], border: colors.text }
             },
             font: { color: colors.text, background: colors.fontBg },
-            shadow: { enabled: true, color: colors.shadow, size: 20, x: 0, y: 8 },
+            shadow: { enabled: true, color: colors.shadow, size: 12, x: 0, y: 4 },
             data: engine
         });
     });
@@ -61,7 +61,7 @@ function buildGraph() {
                 highlight: { background: "#fff", border: "#fff" }
             },
             font: { color: colors.text, background: colors.fontBg },
-            shadow: { enabled: true, color: colors.shadow, size: 20, x: 0, y: 8 },
+            shadow: { enabled: true, color: colors.shadow, size: 12, x: 0, y: 4 },
             data: car
         });
 
