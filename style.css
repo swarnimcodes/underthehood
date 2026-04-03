@@ -51,14 +51,21 @@ h1, h2, h3, h4, .info-panel h3, .legend h4, .theme-toggle {
     cursor: grab;
 }
 
-#network.ripple::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 0;
-    background: radial-gradient(circle at var(--ripple-x, 50%) var(--ripple-y, 50%), var(--text-muted) 0%, transparent 50%);
-    opacity: 0;
-    pointer-events: none;
+#network.ripple::after,
+.search-container.ripple::after {
+    display: none;
+}
+
+@keyframes canvasRipple {
+    0% {
+        box-shadow: 0 0 0 0 rgba(160, 128, 96, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 20px rgba(160, 128, 96, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(160, 128, 96, 0);
+    }
 }
 
 #network.ripple::after {
@@ -131,6 +138,40 @@ h1, h2, h3, h4, .info-panel h3, .legend h4, .theme-toggle {
 .info-panel.visible {
     transform: translateY(0);
     opacity: 1;
+    animation: panelPulse 0.4s ease-out;
+}
+
+@keyframes panelPulse {
+    0% {
+        transform: translateY(20px) scale(0.95);
+        opacity: 0;
+    }
+    50% {
+        transform: translateY(0) scale(1.02);
+    }
+    100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+#network.ripple::after,
+.search-container.ripple::after {
+    display: none;
+}
+
+@keyframes panelPulse {
+    0% {
+        transform: translateY(20px) scale(0.95);
+        opacity: 0;
+    }
+    50% {
+        transform: translateY(0) scale(1.02);
+    }
+    100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
 }
 
 .info-panel h3 {
