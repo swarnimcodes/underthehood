@@ -274,7 +274,6 @@ function animateNodePulse(nodeId) {
 
 function selectResult(item) {
     closeSearch();
-    network.selectNodes([item.id]);
     network.focus(item.id, {
         scale: 1.35,
         animation: {
@@ -420,6 +419,7 @@ network.on("click", function (params) {
     }
 
     infoPanel.classList.add("visible");
+    network.unselectAll();
 });
 
 function resetEdgeStyles() {
