@@ -236,6 +236,106 @@
             display: block;
             margin-bottom: 4px;
         }
+
+        .search-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 15vh;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+
+        .search-modal.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .search-container {
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 12px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 8px 32px var(--shadow);
+            overflow: hidden;
+        }
+
+        .search-input-wrapper {
+            padding: 16px;
+            border-bottom: 1px solid var(--panel-border);
+        }
+
+        .search-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            font-size: 18px;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            outline: none;
+        }
+
+        .search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-results {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .search-result {
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: background 0.1s;
+        }
+
+        .search-result:hover,
+        .search-result.selected {
+            background: var(--text-muted);
+            color: var(--bg);
+        }
+
+        .search-result-name {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+        }
+
+        .search-result-type {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.7;
+            padding: 2px 8px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .search-hint {
+            padding: 12px 16px;
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: center;
+            border-top: 1px solid var(--panel-border);
+        }
+
+        .search-hint kbd {
+            background: var(--bg);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+            margin: 0 2px;
+        }
     </style>
 </head>
 <body>
@@ -273,6 +373,18 @@
         <span class="type-badge" id="infoType">Engine</span>
         <h3 id="infoTitle">Engine Name</h3>
         <div id="infoDetails"></div>
+    </div>
+
+    <div class="search-modal" id="searchModal">
+        <div class="search-container">
+            <div class="search-input-wrapper">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search cars or engines..." autocomplete="off">
+            </div>
+            <div class="search-results" id="searchResults"></div>
+            <div class="search-hint">
+                <kbd>↑</kbd><kbd>↓</kbd> navigate &nbsp; <kbd>Enter</kbd> select &nbsp; <kbd>Esc</kbd> close
+            </div>
+        </div>
     </div>
 
     <script>
@@ -820,6 +932,138 @@
         }
 
         initTheme();
+
+        const searchModal = document.getElementById("searchModal");
+        const searchInput = document.getElementById("searchInput");
+        const searchResults = document.getElementById("searchResults");
+        let searchIndex = 0;
+        let filteredResults = [];
+        let allSearchItems = [];
+
+        function buildSearchIndex() {
+            allSearchItems = [];
+            engines.forEach(e => {
+                allSearchItems.push({
+                    id: e.id,
+                    name: e.name,
+                    code: e.code || '',
+                    type: 'engine',
+                    data: e
+                });
+            });
+            cars.forEach(c => {
+                allSearchItems.push({
+                    id: c.id,
+                    name: c.name,
+                    code: '',
+                    type: 'car',
+                    data: c
+                });
+            });
+        }
+
+        function search(query) {
+            query = query.toLowerCase().trim();
+            if (!query) return [];
+            return allSearchItems.filter(item => 
+                item.name.toLowerCase().includes(query) || 
+                item.code.toLowerCase().includes(query)
+            );
+        }
+
+        function renderResults(results) {
+            searchResults.innerHTML = '';
+            results.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'search-result' + (i === searchIndex ? ' selected' : '');
+                div.innerHTML = `
+                    <span class="search-result-name">${item.name}</span>
+                    <span class="search-result-type">${item.type}</span>
+                `;
+                div.onclick = () => selectResult(item);
+                searchResults.appendChild(div);
+            });
+        }
+
+        function openSearch() {
+            searchModal.classList.add("visible");
+            searchInput.value = '';
+            searchIndex = 0;
+            filteredResults = search('');
+            renderResults(filteredResults);
+            searchInput.focus();
+        }
+
+        function closeSearch() {
+            searchModal.classList.remove("visible");
+        }
+
+        function selectResult(item) {
+            closeSearch();
+            network.selectNodes([item.id]);
+            network.focus(item.id, { scale: 1.5, animation: true });
+            const node = data.nodes.get(item.id);
+            if (node.group === 'engine') {
+                const e = node.data;
+                document.getElementById("infoType").textContent = "Engine";
+                document.getElementById("infoType").className = "type-badge engine";
+                document.getElementById("infoTitle").textContent = e.name;
+                document.getElementById("infoDetails").innerHTML = `
+                    <div class="detail"><span class="detail-label">Displacement</span><span class="detail-value">${e.displacement}</span></div>
+                    <div class="detail"><span class="detail-label">Power</span><span class="detail-value">${e.power}</span></div>
+                    <div class="detail"><span class="detail-label">Fuel</span><span class="detail-value" style="text-transform:capitalize">${e.fuel}</span></div>
+                    <div class="detail"><span class="detail-label">Cylinders</span><span class="detail-value">${e.cylinders}</span></div>
+                    ${e.code ? `<div class="detail"><span class="detail-label">Code</span><span class="detail-value">${e.code}</span></div>` : ""}
+                    <div class="detail"><span class="detail-label">Years</span><span class="detail-value">${e.yearRange}</span></div>
+                    ${e.notes ? `<div class="detail"><span class="detail-label">Notes</span><span class="detail-value">${e.notes}</span></div>` : ""}
+                `;
+            } else {
+                const c = node.data;
+                const engineNames = c.engines.map(id => {
+                    const eng = engines.find(e => e.id === id);
+                    return eng ? eng.name : id;
+                }).join(", ");
+                document.getElementById("infoType").textContent = "Car";
+                document.getElementById("infoType").className = "type-badge car";
+                document.getElementById("infoTitle").textContent = c.name;
+                document.getElementById("infoDetails").innerHTML = `
+                    <div class="detail"><span class="detail-label">Brand</span><span class="detail-value">${c.brand}</span></div>
+                    <div class="detail"><span class="detail-label">Engines</span><span class="detail-value" style="font-size:11px">${engineNames}</span></div>
+                `;
+            }
+            document.getElementById("infoPanel").classList.add("visible");
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === '/' && document.activeElement !== searchInput) {
+                e.preventDefault();
+                openSearch();
+            }
+            if (!searchModal.classList.contains('visible')) return;
+            
+            if (e.key === 'Escape') {
+                closeSearch();
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                searchIndex = Math.min(searchIndex + 1, filteredResults.length - 1);
+                renderResults(filteredResults);
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                searchIndex = Math.max(searchIndex - 1, 0);
+                renderResults(filteredResults);
+            } else if (e.key === 'Enter' && filteredResults.length > 0) {
+                e.preventDefault();
+                selectResult(filteredResults[searchIndex]);
+            }
+        });
+
+        searchInput.addEventListener('input', function() {
+            searchIndex = 0;
+            filteredResults = search(this.value);
+            renderResults(filteredResults);
+        });
+
+        buildSearchIndex();
 
         const infoPanel = document.getElementById("infoPanel");
         const infoType = document.getElementById("infoType");
