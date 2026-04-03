@@ -237,10 +237,52 @@ function closeSearch() {
     searchInput.blur();
 }
 
+function animateNodePulse(nodeId) {
+    const node = data.nodes.get(nodeId);
+    if (!node) {
+        return;
+    }
+
+    const baseSize = node.group === "engine" ? 26 : 20;
+    const peakSize = node.group === "engine" ? 30 : 24;
+    const duration = 260;
+    const start = performance.now();
+
+    function frame(timestamp) {
+        const elapsed = timestamp - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = progress < 0.5
+            ? 2 * progress * progress
+            : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+        const wave = Math.sin(eased * Math.PI);
+        const size = baseSize + (peakSize - baseSize) * wave;
+
+        data.nodes.update({
+            id: nodeId,
+            size: Number(size.toFixed(2))
+        });
+
+        if (progress < 1) {
+            requestAnimationFrame(frame);
+        } else {
+            data.nodes.update({ id: nodeId, size: baseSize });
+        }
+    }
+
+    requestAnimationFrame(frame);
+}
+
 function selectResult(item) {
     closeSearch();
     network.selectNodes([item.id]);
-    network.focus(item.id, { scale: 1.5, animation: true });
+    network.focus(item.id, {
+        scale: 1.35,
+        animation: {
+            duration: 550,
+            easingFunction: "easeInOutCubic"
+        }
+    });
+    animateNodePulse(item.id);
     const node = data.nodes.get(item.id);
     if (node.group === 'engine') {
         const e = node.data;
@@ -321,6 +363,8 @@ network.on("click", function (params) {
     const nodeId = params.nodes[0];
     const node = data.nodes.get(nodeId);
     const colors = getColors();
+
+    animateNodePulse(nodeId);
 
     if (node.group === "engine") {
         const e = node.data;
