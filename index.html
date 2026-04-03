@@ -756,6 +756,10 @@
 
         const network = new vis.Network(container, data, options);
 
+        network.once("stabilized", function() {
+            network.fit({ animation: true, padding: 50 });
+        });
+
         network.on("hoverNode", function () {
             container.style.cursor = 'pointer';
         });
