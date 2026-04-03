@@ -1,0 +1,329 @@
+:root {
+    --bg: #f5f2eb;
+    --text: #2d2d2d;
+    --text-muted: #8b7355;
+    --panel-bg: rgba(245, 242, 235, 0.95);
+    --panel-border: rgba(160, 128, 96, 0.2);
+    --legend-bg: rgba(245, 242, 235, 0.9);
+    --shadow: rgba(160, 128, 96, 0.15);
+    --edge: rgba(160, 128, 96, 0.5);
+    --car-bg: #4a4a4a;
+    --font-bg: rgba(245, 242, 235, 0.8);
+}
+
+[data-theme="dark"] {
+    --bg: #0d0d0d;
+    --text: #e8e8e8;
+    --text-muted: #a08060;
+    --panel-bg: rgba(20, 20, 25, 0.95);
+    --panel-border: rgba(160, 128, 96, 0.15);
+    --legend-bg: rgba(20, 20, 25, 0.9);
+    --shadow: rgba(0, 0, 0, 0.4);
+    --edge: rgba(180, 150, 110, 0.5);
+    --car-bg: #b0b0b0;
+    --font-bg: rgba(13, 13, 13, 0.85);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow: hidden;
+    height: 100vh;
+    transition: background 0.3s, color 0.3s;
+}
+
+h1, h2, h3, h4, .info-panel h3, .legend h4, .theme-toggle {
+    font-family: 'Playfair Display', serif;
+}
+
+#network {
+    width: 100%;
+    height: 100vh;
+    background: var(--bg);
+    transition: background 0.3s;
+    cursor: grab;
+}
+
+#network:active {
+    cursor: grabbing;
+}
+
+.theme-toggle {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 12px;
+    cursor: pointer;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    z-index: 200;
+    transition: all 0.3s;
+}
+
+.theme-toggle:hover {
+    background: var(--text-muted);
+    color: var(--bg);
+}
+
+.vis-network canvas {
+    cursor: grab;
+}
+
+.vis-network canvas:active {
+    cursor: grabbing;
+}
+
+.info-panel {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    background: var(--panel-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--panel-border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    min-width: 280px;
+    max-width: 340px;
+    box-shadow: 0 8px 32px var(--shadow);
+    transform: translateY(120%);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 100;
+}
+
+.info-panel.visible {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.info-panel h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--text);
+    letter-spacing: 0.3px;
+}
+
+.info-panel .type-badge {
+    display: inline-block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+    font-weight: 500;
+}
+
+.info-panel .type-badge.engine {
+    background: rgba(199, 91, 57, 0.15);
+    color: #c75b39;
+    border: 1px solid rgba(199, 91, 57, 0.3);
+}
+
+.info-panel .type-badge.car {
+    background: rgba(176, 176, 176, 0.15);
+    color: #b0b0b0;
+    border: 1px solid rgba(176, 176, 176, 0.3);
+}
+
+.info-panel .detail {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--panel-border);
+    font-size: 13px;
+}
+
+.info-panel .detail:last-child {
+    border-bottom: none;
+}
+
+.info-panel .detail-label {
+    color: var(--text-muted);
+}
+
+.info-panel .detail-value {
+    color: var(--text);
+    font-weight: 500;
+}
+
+.legend {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    background: var(--legend-bg);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--panel-border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-size: 12px;
+}
+
+.legend h4 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.legend-item:last-child {
+    margin-bottom: 0;
+}
+
+.legend-shape {
+    width: 14px;
+    height: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.legend-hex {
+    width: 12px;
+    height: 10px;
+    background: #c75b39;
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+}
+
+.legend-circle {
+    width: 12px;
+    height: 12px;
+    background: var(--car-bg);
+    border: 2px dashed var(--text-muted);
+    border-radius: 50%;
+    box-sizing: border-box;
+}
+
+.instructions {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.instructions span {
+    display: block;
+    margin-bottom: 4px;
+}
+
+.search-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 15vh;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+}
+
+.search-modal.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.search-container {
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: 12px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 8px 32px var(--shadow);
+    overflow: hidden;
+}
+
+.search-input-wrapper {
+    padding: 16px;
+    border-bottom: 1px solid var(--panel-border);
+}
+
+.search-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    outline: none;
+}
+
+.search-input::placeholder {
+    color: var(--text-muted);
+}
+
+.search-results {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.search-result {
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: background 0.1s;
+}
+
+.search-result:hover,
+.search-result.selected {
+    background: var(--text-muted);
+    color: var(--bg);
+}
+
+.search-result-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+}
+
+.search-result-type {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.7;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.search-hint {
+    padding: 12px 16px;
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: center;
+    border-top: 1px solid var(--panel-border);
+}
+
+.search-hint kbd {
+    background: var(--bg);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    margin: 0 2px;
+}

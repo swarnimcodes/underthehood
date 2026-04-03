@@ -118,10 +118,12 @@ This project has no build process, linters, or test frameworks. The code runs di
 
 ---
 
-## File to Edit
+## File Structure
 
-Only one file needs editing for most changes:
-- `/home/swarnim/projects/personal/underthehood/index.html`
+Three separate files:
+- `index.html` - HTML only (links to CSS/JS)
+- `style.css` - All CSS styles
+- `app.js` - All JavaScript (data + logic)
 
 ---
 
