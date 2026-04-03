@@ -40,7 +40,8 @@ function buildGraph() {
             color: {
                 background: fuelColors[engine.fuel],
                 border: fuelColors[engine.fuel],
-                highlight: { background: fuelColors[engine.fuel], border: colors.text }
+                highlight: { background: fuelColors[engine.fuel], border: fuelColors[engine.fuel] },
+                hover: { background: fuelColors[engine.fuel], border: fuelColors[engine.fuel] }
             },
             font: { color: colors.text, background: colors.fontBg },
             shadow: { enabled: true, color: colors.shadow, size: 12, x: 0, y: 4 },
@@ -58,7 +59,8 @@ function buildGraph() {
             color: {
                 background: colors.car,
                 border: colors.car,
-                highlight: { background: "#fff", border: "#fff" }
+                highlight: { background: colors.car, border: colors.car },
+                hover: { background: colors.car, border: colors.car }
             },
             font: { color: colors.text, background: colors.fontBg },
             shadow: { enabled: true, color: colors.shadow, size: 12, x: 0, y: 4 },
@@ -144,8 +146,7 @@ function applyTheme(save) {
             id: node.id,
             color: {
                 background: isCar ? colors.car : node.color.background,
-                border: isCar ? colors.car : node.color.border,
-                highlight: { background: isCar ? '#fff' : node.color.background, border: colors.text }
+                border: isCar ? colors.car : node.color.border
             },
             font: { color: colors.text, background: colors.fontBg },
             shadow: { enabled: true, color: colors.shadow, size: 15, x: 0, y: 6 }
@@ -274,6 +275,9 @@ function animateNodePulse(nodeId) {
 
 function selectResult(item) {
     closeSearch();
+    resetNodeStyles();
+    resetEdgeStyles();
+    network.selectNodes([item.id]);
     network.focus(item.id, {
         scale: 1.35,
         animation: {
@@ -355,6 +359,7 @@ const infoDetails = document.getElementById("infoDetails");
 network.on("click", function (params) {
     if (params.nodes.length === 0) {
         infoPanel.classList.remove("visible");
+        resetNodeStyles();
         resetEdgeStyles();
         return;
     }
@@ -362,6 +367,9 @@ network.on("click", function (params) {
     const nodeId = params.nodes[0];
     const node = data.nodes.get(nodeId);
     const colors = getColors();
+
+    resetNodeStyles();
+    resetEdgeStyles();
 
     animateNodePulse(nodeId);
 
@@ -419,8 +427,24 @@ network.on("click", function (params) {
     }
 
     infoPanel.classList.add("visible");
-    network.unselectAll();
 });
+
+function resetNodeStyles() {
+    const colors = getColors();
+    data.nodes.forEach(function(node) {
+        const isCar = node.group === 'car';
+        const bg = isCar ? colors.car : fuelColors[node.data.fuel];
+        data.nodes.update({
+            id: node.id,
+            color: {
+                background: bg,
+                border: bg,
+                highlight: { background: bg, border: bg },
+                hover: { background: bg, border: bg }
+            }
+        });
+    });
+}
 
 function resetEdgeStyles() {
     const colors = getColors();
