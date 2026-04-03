@@ -241,19 +241,6 @@ function selectResult(item) {
     closeSearch();
     network.selectNodes([item.id]);
     network.focus(item.id, { scale: 1.5, animation: true });
-    const colors = getColors();
-    data.nodes.update({
-        id: item.id,
-        size: 32,
-        borderWidth: 3
-    });
-    setTimeout(function() {
-        data.nodes.update({
-            id: item.id,
-            size: item.type === 'engine' ? 26 : 20,
-            borderWidth: 3
-        });
-    }, 300);
     const node = data.nodes.get(item.id);
     if (node.group === 'engine') {
         const e = node.data;
@@ -334,19 +321,6 @@ network.on("click", function (params) {
     const nodeId = params.nodes[0];
     const node = data.nodes.get(nodeId);
     const colors = getColors();
-
-    data.nodes.update({
-        id: nodeId,
-        size: 32,
-        borderWidth: 3
-    });
-    setTimeout(function() {
-        data.nodes.update({
-            id: nodeId,
-            size: node.group === 'engine' ? 26 : 20,
-            borderWidth: 3
-        });
-    }, 300);
 
     if (node.group === "engine") {
         const e = node.data;
