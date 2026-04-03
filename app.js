@@ -244,16 +244,16 @@ function selectResult(item) {
     const colors = getColors();
     data.nodes.update({
         id: item.id,
-        borderWidth: 5,
-        shadow: { enabled: true, color: currentTheme === 'dark' ? 'rgba(255,255,255,0.5)' : 'rgba(160,128,96,0.8)', size: 25, x: 0, y: 0 }
+        size: 32,
+        borderWidth: 3
     });
     setTimeout(function() {
         data.nodes.update({
             id: item.id,
-            borderWidth: 3,
-            shadow: { enabled: true, color: colors.shadow, size: 12, x: 0, y: 4 }
+            size: item.type === 'engine' ? 26 : 20,
+            borderWidth: 3
         });
-    }, 400);
+    }, 300);
     const node = data.nodes.get(item.id);
     if (node.group === 'engine') {
         const e = node.data;
@@ -337,16 +337,16 @@ network.on("click", function (params) {
 
     data.nodes.update({
         id: nodeId,
-        borderWidth: 5,
-        shadow: { enabled: true, color: currentTheme === 'dark' ? 'rgba(255,255,255,0.5)' : 'rgba(160,128,96,0.8)', size: 25, x: 0, y: 0 }
+        size: 32,
+        borderWidth: 3
     });
     setTimeout(function() {
         data.nodes.update({
             id: nodeId,
-            borderWidth: 3,
-            shadow: { enabled: true, color: colors.shadow, size: 12, x: 0, y: 4 }
+            size: node.group === 'engine' ? 26 : 20,
+            borderWidth: 3
         });
-    }, 400);
+    }, 300);
 
     if (node.group === "engine") {
         const e = node.data;
