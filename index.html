@@ -688,7 +688,17 @@
                     <div class="detail"><span class="detail-label">Engines</span><span class="detail-value" style="font-size:11px">${engineNames}</span></div>
                 `;
 
-                resetEdgeStyles();
+                c.engines.forEach(function(engineId) {
+                    data.edges.forEach(function(edge) {
+                        if ((edge.from === nodeId && edge.to === engineId) || (edge.from === engineId && edge.to === nodeId)) {
+                            data.edges.update({
+                                id: edge.id,
+                                color: { color: colors.text, highlight: colors.text },
+                                width: 3
+                            });
+                        }
+                    });
+                });
             }
 
             infoPanel.classList.add("visible");
