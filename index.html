@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Engine Share Graph</title>
     <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #f5f2eb;
@@ -46,6 +46,10 @@
             overflow: hidden;
             height: 100vh;
             transition: background 0.3s, color 0.3s;
+        }
+
+        h1, h2, h3, h4, .info-panel h3, .legend h4, .theme-toggle {
+            font-family: 'Cormorant Garamond', serif;
         }
 
         #network {
