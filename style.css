@@ -39,6 +39,53 @@ body {
     transition: background 0.3s, color 0.3s;
 }
 
+#loader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    transition: opacity 0.3s ease-out;
+}
+
+#loader.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loader-hex {
+    width: 80px;
+    height: 80px;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    background: #1a1a1a;
+    animation: loaderSpin 3s ease-in-out infinite;
+}
+
+[data-theme="dark"] .loader-hex {
+    background: #e8e8e8;
+}
+
+@keyframes loaderSpin {
+    0% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(180deg) scale(1); }
+    37.5% { transform: rotate(180deg) scale(1.2); }
+    50% { transform: rotate(180deg) scale(1); }
+    75% { transform: rotate(360deg) scale(1); }
+    87.5% { transform: rotate(360deg) scale(1.2); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
+.loader-text {
+    margin-top: 20px;
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--text);
+    letter-spacing: 0.5px;
+}
+
 h1, h2, h3, h4, .info-panel h3, .legend h4, .theme-toggle {
     font-family: 'Playfair Display', serif;
 }

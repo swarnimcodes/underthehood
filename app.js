@@ -95,13 +95,17 @@ const options = {
     physics: {
         enabled: true,
         solver: "forceAtlas2Based",
-        forceAtlas2Based: { 
-            gravitationalConstant: -100, 
-            centralGravity: 0.01, 
+        forceAtlas2Based: {
+            gravitationalConstant: -100,
+            centralGravity: 0.015,
             springLength: 150,
-            springConstant: 0.02
+            springConstant: 0.035
         },
-        stabilization: { iterations: 300 }
+        stabilization: {
+            iterations: 200,
+            updateInterval: 50,
+            fit: false
+        }
     },
     interaction: {
         hover: true,
@@ -112,7 +116,12 @@ const options = {
 const network = new vis.Network(container, data, options);
 
 network.once("stabilized", function() {
-    network.moveTo({ scale: 1.0, animation: true });
+    network.moveTo({ scale: 1.0 });
+    const loader = document.getElementById("loader");
+    loader.classList.add("hidden");
+    loader.addEventListener("transitionend", function() {
+        loader.remove();
+    });
 });
 
 network.on("hoverNode", function () {
