@@ -757,7 +757,7 @@
         const network = new vis.Network(container, data, options);
 
         network.once("stabilized", function() {
-            network.fit({ animation: true, padding: 50 });
+            network.moveTo({ scale: 0.9, animation: true });
         });
 
         network.on("hoverNode", function () {
