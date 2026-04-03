@@ -246,6 +246,8 @@ function selectResult(item) {
         document.getElementById("infoDetails").innerHTML = `
             <div class="detail"><span class="detail-label">Displacement</span><span class="detail-value">${e.displacement}</span></div>
             <div class="detail"><span class="detail-label">Power</span><span class="detail-value">${e.power}</span></div>
+            <div class="detail"><span class="detail-label">Torque</span><span class="detail-value">${e.torque}</span></div>
+            <div class="detail"><span class="detail-label">Aspiration</span><span class="detail-value">${e.aspiration}</span></div>
             <div class="detail"><span class="detail-label">Fuel</span><span class="detail-value" style="text-transform:capitalize">${e.fuel}</span></div>
             <div class="detail"><span class="detail-label">Cylinders</span><span class="detail-value">${e.cylinders}</span></div>
             ${e.code ? `<div class="detail"><span class="detail-label">Code</span><span class="detail-value">${e.code}</span></div>` : ""}
@@ -324,6 +326,8 @@ network.on("click", function (params) {
         infoDetails.innerHTML = `
             <div class="detail"><span class="detail-label">Displacement</span><span class="detail-value">${e.displacement}</span></div>
             <div class="detail"><span class="detail-label">Power</span><span class="detail-value">${e.power}</span></div>
+            <div class="detail"><span class="detail-label">Torque</span><span class="detail-value">${e.torque}</span></div>
+            <div class="detail"><span class="detail-label">Aspiration</span><span class="detail-value">${e.aspiration}</span></div>
             <div class="detail"><span class="detail-label">Fuel</span><span class="detail-value" style="text-transform:capitalize">${e.fuel}</span></div>
             <div class="detail"><span class="detail-label">Cylinders</span><span class="detail-value">${e.cylinders}</span></div>
             ${e.code ? `<div class="detail"><span class="detail-label">Code</span><span class="detail-value">${e.code}</span></div>` : ""}
