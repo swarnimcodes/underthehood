@@ -95,7 +95,7 @@ const engines = [
         name: "Honda L15B e:HEV",
         displacement: "1.5L",
         power: "98 HP",
-        torque: "127 Nm",
+        torque: "172 Nm",
         aspiration: "Naturally Aspirated",
         fuel: "hybrid",
         family: "L15B",
